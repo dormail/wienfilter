@@ -30,6 +30,9 @@ void move(std::tuple<double, double> x0, std::tuple<double, double> v0, double E
 
 	double time = 0;
 
+	// a tuple with zeros
+	std::tuple<double, double> zeros(0,0);
+
 	// another tuple for the force
 	std::tuple<double, double> F(0,0);
 
@@ -47,13 +50,13 @@ void move(std::tuple<double, double> x0, std::tuple<double, double> v0, double E
 		F = lorentzforce(vt, B);
 		std::get<0>(F) = std::get<0>(F) / m;
 		// y-Force is lorentzforce + coloumbforce
-		std::get<1>(F) = (FCO + std::get<1>(F)) / m;
+		std::get<1>(F) = (FCO - std::get<1>(F)) / m;
 
-		xt = step(xt, vt, dt);
-		vt = step(vt, F, dt);
+		xt = step(xt, vt, F, dt);
+		vt = step(vt, F, zeros, dt);
 
 		// saving new data in file
-		output << time << ", ";
+		output << time << ",";
 		output << std::get<0>(xt) << ",";
 		output << std::get<1>(xt) << ",";
 		output << std::get<0>(vt) << ",";
