@@ -10,10 +10,13 @@
 #include <iostream>
 #include <fstream>
 
-void move(std::tuple<double, double> x0, std::tuple<double, double> v0, double E, double B, double T, double dt, double m){
+void move(std::tuple<double, double> x0, std::tuple<double, double> v0, double E, double B, double T, double dt, double m, double q){
 	unsigned int run = T / dt; // amount of iterations
 
 	//std::cout << run << '\n';
+	
+	// The coloumb force (which is constant in the wien filter)
+	double FCO = E * q;
 
 	// using lists for each datapoint
 	std::vector<double> vx(run);
@@ -41,7 +44,7 @@ void move(std::tuple<double, double> x0, std::tuple<double, double> v0, double E
 	std::ofstream output;
 	output.open("wienfilter.csv");
 
-	output << "t, x(t), y(t), vx(t), vy(t),\n";
+	output << "t,x,y,vx,vy\n";
 	
 	// the main simulation part
 	for(unsigned int i = 1; i < run; i++){
@@ -50,7 +53,8 @@ void move(std::tuple<double, double> x0, std::tuple<double, double> v0, double E
 
 		F = lorentzforce(vt, B);
 		std::get<0>(F) = std::get<0>(F) / m;
-		std::get<1>(F) = std::get<1>(F) / m;
+		// y-Force is lorentzforce + coloumbforce
+		std::get<1>(F) = (FCO + std::get<1>(F)) / m;
 
 		xt = step(xt, vt, dt);
 		vt = step(vt, F, dt);
@@ -64,10 +68,10 @@ void move(std::tuple<double, double> x0, std::tuple<double, double> v0, double E
 
 		// saving new data in file
 		output << time << ", ";
-		output << std::get<0>(xt) << ", ";
-		output << std::get<1>(xt) << ", ";
-		output << std::get<0>(vt) << ", ";
-		output << std::get<1>(vt) << ", ";
+		output << std::get<0>(xt) << ",";
+		output << std::get<1>(xt) << ",";
+		output << std::get<0>(vt) << ",";
+		output << std::get<1>(vt);
 		output << '\n';
 	}
 	output.close();
