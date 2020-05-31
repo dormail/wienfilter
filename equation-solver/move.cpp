@@ -18,13 +18,6 @@ void move(std::tuple<double, double> x0, std::tuple<double, double> v0, double E
 	// The coloumb force (which is constant in the wien filter)
 	double FCO = E * q;
 
-	// using lists for each datapoint
-	std::vector<double> vx(run);
-	std::vector<double> vy(run);
-	std::vector<double> x(run);
-	std::vector<double> y(run);
-	std::vector<double> t(run);
-
 	// space holder for current data
 	std::tuple<double, double> xt(0,0);
 	std::tuple<double, double> vt(0,0);
@@ -58,13 +51,6 @@ void move(std::tuple<double, double> x0, std::tuple<double, double> v0, double E
 
 		xt = step(xt, vt, dt);
 		vt = step(vt, F, dt);
-
-		// saving the new data to vector
-		x.at(i) = std::get<0>(xt);
-		y.at(i) = std::get<1>(xt);
-		vx[i] = std::get<0>(vt);
-		vy[i] = std::get<1>(vt);
-		t[i] = time;
 
 		// saving new data in file
 		output << time << ", ";
