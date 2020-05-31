@@ -8,11 +8,12 @@
 #include "functions.h"
 #include <vector>
 #include <iostream>
+#include <fstream>
 
 void move(std::tuple<double, double> x0, std::tuple<double, double> v0, double E, double B, double T, double dt, double m){
 	unsigned int run = T / dt; // amount of iterations
 
-	std::cout << run << '\n';
+	//std::cout << run << '\n';
 
 	// using lists for each datapoint
 	std::vector<double> vx(run);
@@ -36,9 +37,15 @@ void move(std::tuple<double, double> x0, std::tuple<double, double> v0, double E
 	// another tuple for the force
 	std::tuple<double, double> F(0,0);
 
+	// for the cs export
+	std::ofstream output;
+	output.open("wienfilter.csv");
+
+	output << "t, x(t), y(t), vx(t), vy(t),\n";
+	
 	// the main simulation part
-	for(unsigned int i = 1; i < run - 1; i++){
-		std::cout << i << '\n';
+	for(unsigned int i = 1; i < run; i++){
+		//std::cout << i << '\n';
 		time += dt; // the counter for the time
 
 		F = lorentzforce(vt, B);
@@ -48,19 +55,22 @@ void move(std::tuple<double, double> x0, std::tuple<double, double> v0, double E
 		xt = step(xt, vt, dt);
 		vt = step(vt, F, dt);
 
-		// saving the new data to lists
+		// saving the new data to vector
 		x.at(i) = std::get<0>(xt);
 		y.at(i) = std::get<1>(xt);
-		//vx[i] = std::get<0>(vt);
-		//vy[i] = std::get<1>(vt);
-		//t[i] = time;
-	}
+		vx[i] = std::get<0>(vt);
+		vy[i] = std::get<1>(vt);
+		t[i] = time;
 
-	vx.~vector();
-	vy.~vector();
-	x.~vector();
-	y.~vector();
-	t.~vector();
+		// saving new data in file
+		output << time << ", ";
+		output << std::get<0>(xt) << ", ";
+		output << std::get<1>(xt) << ", ";
+		output << std::get<0>(vt) << ", ";
+		output << std::get<1>(vt) << ", ";
+		output << '\n';
+	}
+	output.close();
 }
 
 
