@@ -6,9 +6,7 @@
 #include <tuple>
 
 std::tuple<double, double> lorentzforce(std::tuple<double, double> v, double B){
-	std::tuple<double, double> F(0,0);
-	std::get<0>(F) = -1 * B * std::get<1>(v);
-	std::get<1>(F) = B * std::get<0>(v);
+	std::tuple<double, double> F(B * std::get<1>(v), -1 * B * std::get<0>(v));
 	return F;
 }
 
