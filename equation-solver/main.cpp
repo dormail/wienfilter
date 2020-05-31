@@ -4,17 +4,16 @@
 #include <iostream>
 
 int main(int argc, char* argv[]){
-	std::tuple<double, double> r (2,3);
-	std::tuple<double, double> v (1,-5);
+	std::tuple<double, double> r0 (0,0);
+	std::tuple<double, double> v0 (1,1);
 	
-	double t = 1;
-
-	std::tuple<double, double> r2 = step(r,v,t);
-
-	double r2_1 = std::get<0>(r2);
-	double r2_2 = std::get<1>(r2);
+	double T = 5;
+	double dt = 0.01;
+	double B = 1;
+	double E = 0;
+	double m = 1;
 	
-	std::cout << r2_1 << '\n' << r2_2 << '\n';
+	move(r0, v0, E, B, T, dt, m);
 
 	return 0;
 }
