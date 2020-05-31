@@ -1,4 +1,7 @@
-/*** step.cpp start ***/
+/*** step.cpp start 
+ * this function follows the equation
+ * result = r + v * dt;
+ * ***/
 #include "functions.h"
 #include <tuple>
 

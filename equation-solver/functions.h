@@ -8,5 +8,7 @@ std::tuple<double, double> step(std::tuple<double, double> r, std::tuple<double,
 
 std::tuple<double, double> lorentzforce(std::tuple<double, double> v, double B);
 
+void move(std::tuple<double, double> x0, std::tuple<double, double> v0, double E, double B, double T, double dt, double m);
+
 #endif 
 /*** functions.h end ***/
