@@ -30,20 +30,26 @@ vx0 = df['vx'][0]
 
 # computing the analytical result
 omega = q * B / m # zyklotronfrequenz
-y_an = -1 / omega * (E / B + vx0) * np.cos(omega * t) + (E / B + vx0) /omega
-x_an = 1 / omega * (vx0 - E * m /(q * B)) * np.sin(omega * t) + (E * m)/(q * B) * t
 
-vy_an = (E/B + vx0) * np.sin(omega * t)
-vx_an = (vx0 - E * m / (q * B)) * np.cos(omega * t) + E * m / (q * B)
+# analytical solution for location
+x_an = (vx0 - E/B) / omega * np.sin(omega * t) + E * t / B + xt[0]
+y_an = (vx0 - E/B) / omega * np.cos(omega * t) + (E/B - vx0)/omega
 
+# analytical solution for velocity
+vy_an = (E/B - vx0) * np.sin(omega * t)
+vx_an = (vx0 - E/B) * np.cos(omega * t) + E/B
+
+
+#plt.plot(vx,vy)
+#plt.plot(vx_an, vy_an)
 
 plt.plot(xt,yt)
 plt.plot(x_an, y_an)
 plt.legend(['numerical result', 'analytical result'])
 
-#plt.axis('equal')
-plt.xlim(-7,7)
-plt.ylim(-5,5)
+plt.axis('equal')
+#plt.xlim(-7,7)
+#plt.ylim(-5,5)
 
 plt.show()
 
