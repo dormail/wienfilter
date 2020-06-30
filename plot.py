@@ -48,7 +48,7 @@ plt.plot(x_an, y_an)
 plt.legend(['numerical result', 'analytical result'])
 
 plt.axis('equal')
-#plt.xlim(-7,7)
+plt.xlim(-0.5, 2)
 #plt.ylim(-5,5)
 
 plt.show()

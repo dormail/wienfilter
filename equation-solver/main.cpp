@@ -6,12 +6,12 @@
 
 int main(int argc, char* argv[]){
 	std::tuple<double, double> r0 (0,0);
-	std::tuple<double, double> v0 (0.125,0);
+	std::tuple<double, double> v0 (0.25,0);
 	
-	double T = 6;
+	double T = 10;
 	double dt = 0.0001;
 	double B = 4;
-	double E = 1;
+	double E = -1;
 	double m = 1;
 	double q = 1;
 	

@@ -50,7 +50,7 @@ void move(std::tuple<double, double> x0, std::tuple<double, double> v0, double E
 		F = lorentzforce(vt, B);
 		std::get<0>(F) = std::get<0>(F) / m;
 		// y-Force is lorentzforce + coloumbforce
-		std::get<1>(F) = (1 * FCO + std::get<1>(F)) / m;
+		std::get<1>(F) = (FCO + std::get<1>(F)) / m;
 
 		xt = step(xt, vt, F, dt);
 		vt = step(vt, F, zeros, dt);
